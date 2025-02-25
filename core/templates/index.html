@@ -1,0 +1,101 @@
+<!-- core/templates/index.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home - Tea Website{% endblock %}
+
+{% block content %}
+<h2 class="text-center">Chinese Tea Chronicles</h2>
+<h2 class="text-center">A Website Dedicated to Tradition and Flavor</h2>
+
+<!-- Introduction Carousel -->
+<div id="introCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <!-- First Image -->
+        <div class="carousel-item active">
+            <img src="{% static 'images/tea1.jpg' %}" class="d-block w-100" alt="Tea Image 1">
+        </div>
+        <!-- Second Image -->
+        <div class="carousel-item">
+            <img src="{% static 'images/tea2.jpg' %}" class="d-block w-100" alt="Tea Image 2">
+        </div>
+        <!-- Third Image -->
+        <div class="carousel-item">
+            <img src="{% static 'images/tea3.jpg' %}" class="d-block w-100" alt="Tea Image 3">
+        </div>
+        <!-- Fourth Image -->
+        <div class="carousel-item">
+            <img src="{% static 'images/tea4.jpg' %}" class="d-block w-100" alt="Tea Image 4">
+        </div>
+        <!-- Fifth Image -->
+        <div class="carousel-item">
+            <img src="{% static 'images/tea5.jpg' %}" class="d-block w-100" alt="Tea Image 5">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#introCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#introCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<!-- Tea Gardens Section -->
+
+<!-- News Section with Pagination -->
+<div class="container mt-5 latest-news">
+    <h3>Latest News</h3>
+    <div class="list-group ">
+        {% for article in news %}
+        <a href="{% url 'news_detail' pk=article.pk %}" class="list-group-item list-group-item-action d-flex align-items-center news-item latest-news">
+            <!-- Display image only if it exists -->
+            {% if article.image %}
+            <img src="{{ article.image.url }}" alt="News Image" class="rounded me-3 latest-news" width="80" height="80">
+            {% else %}
+            <img src="https://picsum.photos/80/80?random={{ forloop.counter }}" alt="News Image" class="rounded me-3 latest-news" width="80" height="80">
+            {% endif %}
+            <div>
+                <h5 class="latest-news">{{ article.title }}</h5>
+                <p class="latest-news">{{ article.content|slice:":100" }}...</p>
+                <small class="latest-news">{{ article.created_at }}</small>
+            </div>
+        </a>
+        {% empty %}
+        <p>No news available.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination Links -->
+    <div class="pagination mt-3">
+        {% if news.has_previous %}
+        <a class="btn btn-primary" href="?page=1" style="margin-right:10px">First</a>
+        <a class="btn btn-primary" href="?page={{ news.previous_page_number }}" style="margin-right:10px">Previous</a>
+        {% endif %}
+
+        <span class="btn btn-light">
+            Page {{ news.number }} of {{ news.paginator.num_pages }}
+        </span>
+
+        {% if news.has_next %}
+        <a class="btn btn-primary next-last" href="?page={{ news.next_page_number }}" style="margin-left:10px">Next</a>
+        <a class="btn btn-primary next-last" href="?page={{ news.paginator.num_pages }}" style="margin-left:10px">Last</a>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    #introCarousel {
+        width: 80%; /* Adjust the width of the carousel */
+        margin: 0 auto; /* Center the carousel horizontally */
+    }
+
+    .carousel-inner img {
+        width: 100%; /* Ensure images take up the full width of the carousel */
+        height: 600px; /* Adjust the height to make the carousel smaller */
+        object-fit: cover; /* Ensure images cover the area without stretching */
+    }
+</style>
+
+{% endblock %}

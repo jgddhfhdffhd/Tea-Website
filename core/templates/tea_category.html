@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Tea Category{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3 class="text-center mb-4">Tea Categories</h3>
+    <div class="row">
+        {% for tea in teas %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm border-light rounded">
+                    <img src="{{ tea.image.url }}" class="card-img-top" alt="{{ tea.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ tea.name }}</h5>
+                        <p class="card-text">{{ tea.description|truncatewords:20 }}</p>
+                        <a href="{% url 'tea_detail' tea.pk %}" class="btn btn-success btn-block">View More</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<style>
+/* Tea Category Page Enhancements */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Slight hover effect */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Add a shadow on hover */
+}
+
+.card-img-top {
+    object-fit: cover;
+    height: 200px;  /* Set a fixed height for uniformity */
+}
+
+h3 {
+    color: #33B464;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.25em;
+    font-weight: 600;
+}
+
+.card-text {
+    font-size: 1em;
+    color: #666;
+}
+
+.btn-success {
+    background-color: #33B464;
+    border-color: #33B464;
+    font-weight: bold;
+}
+
+.btn-success:hover {
+    background-color: #288f4d;
+    border-color: #288f4d;
+}
+</style>
+{% endblock %}

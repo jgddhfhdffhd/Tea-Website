@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ tea.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-left mt-4">
+        <button class="btn btn-secondary" onclick="history.back()">← Back</button>
+    </div>
+    <h2 class="text-center">{{ tea.name }}</h2>
+    {% if tea.image %}
+        <img src="{{ tea.image.url }}" class="img-fluid rounded mx-auto d-block mb-4" alt="{{ tea.name }}">
+    {% endif %}
+    <p>{{ tea.description }}</p>
+</div>
+{% endblock %}

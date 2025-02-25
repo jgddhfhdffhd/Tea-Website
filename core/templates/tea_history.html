@@ -1,0 +1,74 @@
+<!-- core/templates/tea_history.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Tea History{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3 class="text-center mb-4">Tea History</h3>
+    <div class="row">
+        {% for history in tea_history %}
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm border-light rounded">
+                    <img src="{{ history.image.url }}" class="card-img-top" alt="{{ history.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ history.title }}</h5>
+                        <p class="card-text">{{ history.content|truncatewords:30 }}</p>
+                        <a href="{% url 'tea_history_detail' history.pk %}" class="btn btn-info btn-block">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<style>
+    /* Tea History Page Enhancements */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);  /* Add a hover effect */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);  /* Add a shadow on hover */
+}
+
+.card-img-top {
+    object-fit: cover;
+    height: 200px;  /* Set fixed height for image */
+}
+
+h3 {
+    color: #33B464;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.25em;
+    font-weight: 600;
+}
+
+.card-text {
+    font-size: 1em;
+    color: #666;
+}
+
+.btn-info {
+    background-color: #33B464;
+    border-color: #33B464;
+    font-weight: bold;
+}
+
+.btn-info:hover {
+    background-color: #288f4d;
+    border-color: #288f4d;
+}
+
+
+</style>
+{% endblock %}

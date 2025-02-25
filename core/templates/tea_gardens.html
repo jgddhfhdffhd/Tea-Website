@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}Tea Gardens{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Explore Tea Gardens</h2>
+
+    <!-- Search Bar -->
+    <form method="GET" action="{% url 'tea_gardens' %}" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search for a tea garden..." value="{{ query }}">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-success">Search</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        {% for garden in tea_gardens %}
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm border-0 rounded">
+                <div class="row g-0">
+                    {% if garden.image %}
+                    <div class="col-md-4">
+                        <img src="{{ garden.image.url }}" class="img-fluid rounded-start" alt="{{ garden.name }}">
+                    </div>
+                    {% endif %}
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ garden.name }}</h5>
+                            <p class="card-text"><strong>Location:</strong> {{ garden.location }}</p>
+                            <a href="{% url 'tea_garden_detail' garden.pk %}" class="btn btn-outline-success">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+/* Tea Gardens Page Enhancements */
+.card {
+    transition: all 0.3s ease;
+    background-color: #fff;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.img-fluid {
+    object-fit: cover;
+    height: 150px;
+    width: 100%;
+    border-radius: 10px 0 0 10px;
+}
+
+h2 {
+    font-weight: bold;
+    color: #33B464;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+.btn-outline-success {
+    border-color: #33B464;
+    color: #33B464;
+}
+
+.btn-outline-success:hover {
+    background-color: #33B464;
+    color: white;
+}
+
+</style>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ history.title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-left mt-4">
+        <button class="btn btn-secondary" onclick="history.back()">← Back</button>
+    </div>
+    <h2 class="text-center">{{ history.title }}</h2>
+    
+    <!-- Font Size Controls -->
+    <div class="text-right mb-3">
+        <button class="btn btn-sm btn-outline-dark" onclick="increaseFont()">A+</button>
+        <button class="btn btn-sm btn-outline-dark" onclick="decreaseFont()">A-</button>
+    </div>
+
+    {% if history.image %}
+        <img src="{{ history.image.url }}" class="img-fluid rounded mx-auto d-block mb-4" alt="{{ history.title }}">
+    {% endif %}
+    <p id="history-content">{{ history.content }}</p>
+</div>
+
+<script>
+    function increaseFont() {
+        document.getElementById("history-content").style.fontSize = "larger";
+    }
+
+    function decreaseFont() {
+        document.getElementById("history-content").style.fontSize = "smaller";
+    }
+</script>
+{% endblock %}

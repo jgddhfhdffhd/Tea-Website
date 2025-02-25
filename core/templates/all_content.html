@@ -1,0 +1,22 @@
+<!-- core/templates/all_content.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}All Content{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>All Content</h2>
+    <ul class="list-group">
+        {% for item in content %}
+        <li class="list-group-item">
+            <h5>{{ item.title }}</h5>
+            <img src="{{ item.image.url }}" alt="{{ item.title }}" width="100">
+            <p>{{ item.content|truncatewords:30 }}</p>
+            <a href="{% url 'admin:core_content_change' item.id %}">Edit</a> |
+            <a href="{% url 'admin:core_content_delete' item.id %}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
