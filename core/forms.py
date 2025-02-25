@@ -1,10 +1,7 @@
-# core/forms.py
-
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
-from .models import Profile
 
 class RegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -23,10 +20,3 @@ class RegistrationForm(forms.ModelForm):
             raise ValidationError("Passwords do not match")
         return cleaned_data
 
-# core/forms.py
-
-
-class ProfileForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = ['profile_picture', 'bio']

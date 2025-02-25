@@ -1,17 +1,11 @@
-# core/views.py
-
 from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 from .forms import RegistrationForm
 from django.core.paginator import Paginator
-from .models import TeaGarden, News, Like, Comment
+from .models import TeaGarden, News, Like, Comment, TeaHistory, Tea
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from .models import Profile, TeaGarden, TeaHistory, Tea
-from .forms import ProfileForm
 from django.http import JsonResponse
+
 
 def home(request):
     # Fetch the tea gardens
@@ -78,20 +72,6 @@ def news_detail(request, pk):
     })
 
 
-@login_required
-def profile(request):
-    profile = Profile.objects.get(user=request.user)
-
-    if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            form.save()
-            return redirect('profile')  # Redirect to the profile page after update
-    else:
-        form = ProfileForm(instance=profile)
-
-    return render(request, 'profile.html', {'form': form})
-
 # Tea Gardens View
 def tea_gardens(request):
     query = request.GET.get('q')
@@ -107,9 +87,11 @@ def tea_history(request):
     tea_history = TeaHistory.objects.all()  # Get all tea history from the database
     return render(request, 'tea_history.html', {'tea_history': tea_history})
 
+
 def tea_category(request):
     teas = Tea.objects.all()  # Retrieve all tea categories
     return render(request, 'tea_category.html', {'teas': teas})
+
 
 def toggle_like(request, pk):
     news_article = get_object_or_404(News, pk=pk)
@@ -124,15 +106,18 @@ def toggle_like(request, pk):
     likes_count = Like.objects.filter(news_article=news_article).count()
     return JsonResponse({"status": status, "likes_count": likes_count})
 
+
 # Tea Category Detail View
 def tea_detail(request, pk):
     tea = get_object_or_404(Tea, pk=pk)
     return render(request, 'tea_detail.html', {'tea': tea})
 
+
 # Tea History Detail View
 def tea_history_detail(request, pk):
     history = get_object_or_404(TeaHistory, pk=pk)
     return render(request, 'tea_history_detail.html', {'history': history})
+
 
 # Tea Garden Detail View
 def tea_garden_detail(request, pk):
