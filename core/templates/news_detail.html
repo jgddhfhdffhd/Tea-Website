@@ -23,6 +23,7 @@
     {% endif %}
 
     <!-- Like/Unlike Button -->
+    {% if user.is_authenticated %}
     <form method="POST" id="like-form">
         {% csrf_token %}
         <button type="button" id="like-button" class="btn btn-primary">
@@ -33,7 +34,8 @@
             {% endif %}
         </button>
     </form>
-    <p id="likes-count">{{ likes_count }} Likes</p>
+    {% endif %}
+    <p id="likes-count" class="text-primary">{{ likes_count }} Likes</p>
 
     <hr>
 
